@@ -80,7 +80,7 @@ if (httpServer) {
         console.log(`Non-Secure Server listening on port ${ports.http}`);
     });
 }
-//app.listen(ports.http, () => {
+//app.listen(ports.http, (err) => {
 //    console.log(`Non-Secure Server listening on port ${ports.http}`);
     //app.on('error', onError);
 //});
