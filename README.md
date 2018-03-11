@@ -1,1 +1,1 @@
-# node-extjs-server
+# Node server for Extjs
