@@ -7,6 +7,7 @@ const http = require('http');
 const certPath = path.join(__dirname, 'certs');
 //const ENV = process.env.NODE_ENV;
 const app = express();
+const bodyParser = require('body-parser');
 const api = require('./api');
 const config = require('./utils/config');
 const ports = {
@@ -58,6 +59,7 @@ if (/^prod/i.test(yargs['client-environment'])) {
     clientPath = path.join(clientPath, 'build',yargs['client-environment'],config.client.clientName);
 }
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, config.direct.classPath)));
 app.use(express.static(clientPath));
 
@@ -70,6 +72,7 @@ router.use(function(req, res, next) {
 });
 
 router.get('/', api.index);
+router.route('/checkcredentials').post(api.credentials);
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
