@@ -78,6 +78,23 @@ router.route('/checkcredentials').post(api.credentials);
 // all of our routes will be prefixed with /api
 app.use('/api', router);
 
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+  });
+  
+  // error handler
+  // no stacktraces leaked to user unless in development environment
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: (yargs['client-environment'] === 'development') ? err : {}
+    });
+  });
+
 if (httpServer) {
     httpServer.listen(ports.http, () => {
         console.log(`Non-Secure Server listening on port ${ports.http}`);
